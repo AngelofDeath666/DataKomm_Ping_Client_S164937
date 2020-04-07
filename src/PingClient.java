@@ -22,15 +22,16 @@ public class PingClient {
 
 
     public static void main(String[] args) throws IOException {
+        //here we create the client object
         PingClient client = new PingClient();
         Scanner scanner = new Scanner(System.in);
+        //the next 7 are text requests and scanners.
         System.out.println("Please input the domain you want to connect to: ");
         client.hostName = scanner.nextLine();
         System.out.println("Please input your chosen port: ");
         client.port = scanner.nextInt();
         System.out.println("Please input your chosen timeout: ");
         client.timeOut = scanner.nextInt();
-        System.out.println(client.timeOut + "banana");
         System.out.println("Please input how many times you want to ping: ");
         int amount = scanner.nextInt();
 
@@ -72,17 +73,24 @@ public class PingClient {
     }
 
     public boolean sendPing() throws IOException{
+        //here we call connectSocket with the inputs hostName, port and timeOut from the scanner
         connectSocket(hostName,port,timeOut);
+        //here we start the time
         setStartTime();
+        //here we send the first byte to the server
         toServer.writeByte(32);
+        //here we read the response
         fromServer.readLine();
+        //here we stop the time and calculated elapsed time
         setElapsedTime();
+        //the three next close the connections to the socket and the server
         socket.close();
         fromServer.close();
         toServer.close();
         return true;
     }
 
+    //here we check if the pings go through
     public void amountOfPings(int amount) throws IOException {
         for (int i = 0; i < amount; i++){
             System.out.println("pinged");
